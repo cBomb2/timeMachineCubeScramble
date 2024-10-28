@@ -1,8 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <h1>time machine scramble generator</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubik's Cube Scramble Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #scramble {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-  <button id="generate" type="button">generate</button>
-  <div id="scramble"></div>
-  <script src="main.js"></script>
+
+<h1>Rubik's Cube Scramble Generator</h1>
+<button id="generate">Generate Scramble</button>
+<div id="scramble"></div>
+
+<script>
+    const moves = ['U', 'D', 'L', 'R', 'F', 'B', 
+                   'U\'', 'D\'', 'L\'', 'R\'', 'F\'', 'B\''];
+    
+    function generateScramble() {
+        const scrambleLength = 20; // Number of moves in the scramble
+        let scramble = [];
+        
+        for (let i = 0; i < scrambleLength; i++) {
+            const move = moves[Math.floor(Math.random() * moves.length)];
+            scramble.push(move);
+        }
+        
+        return scramble.join(' ');
+    }
+
+    document.getElementById('generate').addEventListener('click', () => {
+        document.getElementById('scramble').innerText = generateScramble();
+    });
+</script>
+
 </body>
+</html>
