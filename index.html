@@ -7,71 +7,61 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 50px;
+            margin: 20px;
         }
         button {
-            padding: 10px 20px;
+            padding: 10px 15px;
             font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
         }
         #scramble {
             margin-top: 20px;
-            font-size: 24px;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
+    <h1>2x2 Rubik's Cube Scramble Generator</h1>
+    <button onclick="generateScramble()">Generate Scramble</button>
+    <div id="scramble"></div>
 
-<h1>Rubik's Cube Scramble Generator</h1>
-<button id="generate">Generate Scramble</button>
-<div id="scramble"></div>
+    <script>
+        const cubeMoves = ['U', 'D', 'L', 'R', 'F', 'B'];
+        const wheelMoves = ['~U', '~D', '~L', '~R', '~F', '~B'];
+        const moveModifiers = ["", "'", "2"];
 
-<script>
-    const U = ['U', 'U', 'U', 'U', 'U', 'U', 'U\'', 'U\'', 'U\'', 'U\'', 'U\'', 'U\'', '~U', '~U2', '~U3', '~U4', '~U5', '~U6', '~U\'', '~U2\'', '~U3\'', '~U4\'', '~U5\''];
-    const D = ['D', 'D', 'D', 'D', 'D', 'D', 'D\'', 'D\'', 'D\'', 'D\'', 'D\'', 'D\'', '~D', '~D2', '~D3', '~D4', '~D5', '~D6', '~D\'', '~D2\'', '~D3\'', '~D4\'', '~D5\''];
-    const L = ['L', 'L', 'L', 'L', 'L', 'L', 'L\'', 'L\'', 'L\'', 'L\'', 'L\'', 'L\'', '~L', '~L2', '~L3', '~L4', '~L5', '~L6', '~L\'', '~L2\'', '~L3\'', '~L4\'', '~L5\''];
-    const R = ['R', 'R', 'R', 'R', 'R', 'R', 'R\'', 'R\'', 'R\'', 'R\'', 'R\'', 'R\'', '~R', '~R2', '~R3', '~R4', '~R5', '~R6', '~R\'', '~R2\'', '~R3\'', '~R4\'', '~R5\''];
-    const F = ['F', 'F', 'F', 'F', 'F', 'F', 'F\'', 'F\'', 'F\'', 'F\'', 'F\'', 'F\'', '~F', '~F2', '~F3', '~F4', '~F5', '~F6', '~F\'', '~F2\'', '~F3\'', '~F4\'', '~F5\''];
-    const B = ['B', 'B', 'B', 'B', 'B', 'B', 'B\'', 'B\'', 'B\'', 'B\'', 'B\'', 'B\'', '~B', '~B2', '~B3', '~B4', '~B5', '~B6', '~B\'', '~B2\'', '~B3\'', '~B4\'', '~B5\''];
-    const moves = [
-        [U, D], [L, R], [F, B]
-    ];
-    function generateRandom(min, max, no) {
-        var num = Math.floor(Math.random() * (max - min + 1)) + min;
-        return (num === no) ? generateRandom(min, max, no) : num;
-    }
-    function randomFromList(lst) {
-        var itm = lst[Math.round(Math.random() * lst.length)]
-        return itm
-    }
-    function generateScramble(a) {
-        const scrambleLength = Math.random() * Math.round((moves[0][0].length)*20) + 20; // Number of moves in the scramble
-        let scramble = [];
-        let divToAdd = document.createElement("p");
-        divToAdd.innerText = "1. ";
-        let lastMove = 0;
-        for (let i = 0; i < scrambleLength; i++) {
-            const moveNum = generateRandom(0, 2, lastMove);
-            const move = randomFromList(moves[moveNum][Math.round(Math.random() * 2)]);
-            lastMove = moveNum;
-            divToAdd.innerText += move + " ";
-            if((i+1)%5 == 0){
-                a.appendChild(divToAdd)
-                divToAdd = document.createElement("p");
-                divToAdd.innerText += ((i+1)/5)+1 + ". ";
+        function generateScramble(length = 20) {
+            let scramble = [];
+            let lastMove = null;
+
+            for (let i = 0; i < length; i++) {
+                let fullMove;
+                
+                while (true) {
+                    const moveType = Math.random() < 0.5 ? 'cube' : 'wheel';
+                    const move = moveType === 'cube' ? cubeMoves[Math.floor(Math.random() * cubeMoves.length)] : wheelMoves[Math.floor(Math.random() * wheelMoves.length)];
+                    const modifier = moveModifiers[Math.floor(Math.random() * moveModifiers.length)];
+                    fullMove = move + modifier;
+
+                    // Check for consecutive same or opposite moves
+                    if (fullMove === lastMove){ continue; }
+                    if (lastMove && ((lastMove[0] === fullMove[0]) || 
+                                     (lastMove[0] in 'UD' && fullMove[0] in 'UD') || 
+                                     (lastMove[0] in 'LR' && fullMove[0] in 'LR') || 
+                                     (lastMove[0] in 'FB' && fullMove[0] in 'FB'))) continue;
+
+                    // Allow opposite wheel moves to be next to each other
+                    if (lastMove && lastMove.startsWith('~') && fullMove.startsWith('~')) break; 
+                    
+                    // If it's the first move, it's always allowed
+                    if (!lastMove) break;
+                }
+
+                scramble.push(fullMove);
+                lastMove = fullMove;
             }
+
+            document.getElementById('scramble').innerText = 'Scramble: ' + scramble.join(' ');
         }
-    }
-
-    document.getElementById('generate').addEventListener('click', () => {
-        generateScramble(document.getElementById('scramble'));
-    });
-</script>
-
+    </script>
 </body>
 </html>
