@@ -32,6 +32,20 @@
 <div id="scramble"></div>
 
 <script>
+    $(function(){
+        var $curParent, Content;
+        $(document).delegate("span","click", function(){
+            if($(this).closest("s").length) {
+                Content = $(this).parent("s").html();
+                $curParent = $(this).closest("s");
+                $(Content).insertAfter($curParent);
+                $(this).closest("s").remove();
+            }
+            else {
+                $(this).wrapAll("<s />");
+            }
+        });
+    });
     const moves = [
         'U', 'D', 'L', 'R', 'F', 'B', 'U\'', 'D\'', 'L\'', 'R\'', 'F\'', 'B\'',
         'U', 'D', 'L', 'R', 'F', 'B', 'U\'', 'D\'', 'L\'', 'R\'', 'F\'', 'B\'',
@@ -47,20 +61,20 @@
         '~B', '~B2', '~B3', '~B4', '~B5', '~B6', '~B\'', '~B2\'', '~B3\'', '~B4\'', '~B5\''
     ];
     
-    function generateScramble() {
+    function generateScramble(a) {
         const scrambleLength = Math.round((moves.length/6)*20); // Number of moves in the scramble
         let scramble = [];
         
         for (let i = 0; i < scrambleLength; i++) {
             const move = moves[Math.floor(Math.random() * moves.length)];
-            scramble.push(move);
+            var mve = document.createElement("span");
+            mve.innerText = move;
+            a.appendChild(mve);
         }
-        
-        return scramble.join(' ');
     }
 
     document.getElementById('generate').addEventListener('click', () => {
-        document.getElementById('scramble').innerText = generateScramble();
+        generateScramble(document.getElementById('scramble'));
     });
 </script>
 
