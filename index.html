@@ -50,16 +50,14 @@
     function generateScramble(a) {
         const scrambleLength = Math.round((moves.length/6)*20); // Number of moves in the scramble
         let scramble = [];
-        
+        let divToAdd = document.createElement("p")
         for (let i = 0; i < scrambleLength; i++) {
             const move = moves[Math.floor(Math.random() * moves.length)];
-            var mve = document.createElement("p");
-            mve.innerText = move;
-            a.appendChild(mve);
+            divToAdd.innerText += move + " ";
             if((i+1)%5 == 0){
-                mve = document.createElement("p");
-                mve.innerText = (i+1)/5 + ". ";
-                a.appendChild(mve);
+                a.appendChild(divToAdd)
+                divToAdd = document.createElement("p");
+                divToAdd.innerText += (i+1)/5 + ". ";
             }
         }
     }
