@@ -67,9 +67,14 @@
         
         for (let i = 0; i < scrambleLength; i++) {
             const move = moves[Math.floor(Math.random() * moves.length)];
-            var mve = document.createElement("span");
+            var mve = document.createElement("p");
             mve.innerText = move;
             a.appendChild(mve);
+            if((i+1)%5 == 0){
+                mve = document.createElement("p");
+                mve.innerText = (i+1)/5 + ". ";
+                a.appendChild(mve);
+            }
         }
     }
 
