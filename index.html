@@ -48,7 +48,7 @@
     ];
     
     function generateScramble() {
-        const scrambleLength = 20; // Number of moves in the scramble
+        const scrambleLength = Math.round((moves.length/6)*20); // Number of moves in the scramble
         let scramble = [];
         
         for (let i = 0; i < scrambleLength; i++) {
