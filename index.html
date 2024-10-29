@@ -50,7 +50,7 @@
         return itm
     }
     function generateScramble(a) {
-        const scrambleLength = Math.random() * Math.round((moves.length/6)*20) + 20; // Number of moves in the scramble
+        const scrambleLength = Math.random() * Math.round((moves[0][0].length)*20) + 20; // Number of moves in the scramble
         let scramble = [];
         let divToAdd = document.createElement("p");
         divToAdd.innerText = "1. ";
