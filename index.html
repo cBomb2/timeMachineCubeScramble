@@ -53,8 +53,9 @@
                 if(Math.random() > 0.5){
                     move = generateAxis() + moveModifiers[Math.round(Math.random() * moveModifiers.length)];
                 } else {
-                    move = generateWheelAxis() + wheelModifiers[Math.round(Math.random() * wheelModifiers.length)];
+                    move = "~" + generateWheelAxis() + wheelModifiers[Math.round(Math.random() * wheelModifiers.length)];
                 }
+                move += ", "
                 document.getElementById("scramble").innerText += move;
             }
         }
