@@ -51,12 +51,20 @@
             for(let i = 0; i < moves; i++){
                 var move = ''
                 if(Math.random() > 0.5){
-                    move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)];
+                    if(i != move){
+                        move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)] + ", ";   
+                    } else {
+                        move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)];
+                    }
                 } else {
                     var axiy = generateWheelAxis();
-                    move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)];
+                    
+                    if(i != move){
+                        move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)] + ", ";
+                    } else {
+                        move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)];
+                    }
                 }
-                move += ", "
                 document.getElementById("scramble").innerText += move;
             }
         }
