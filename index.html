@@ -42,7 +42,7 @@
 
         function generateWheelAxis(){
             var axi = wheelAvaliable[Math.floor(Math.random() * wheelAvaliable.length)];
-            wheelAvaliable = [0, 1, 2];
+            wheelAvaliable = [0, 1, 2, 3, 4, 5];
             wheelAvaliable.splice(axi, 1);
             return axi;
         }
@@ -52,7 +52,7 @@
             for(let i = 0; i < moves; i++){
                 var move = ''
                 if(Math.random() > 0.5){
-                    if(i != move){
+                    if(i != 0){
                         move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)] + ", ";   
                     } else {
                         move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)];
@@ -60,7 +60,7 @@
                 } else {
                     var axiy = generateWheelAxis();
                     
-                    if(i != move){
+                    if(i != 0){
                         move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)] + ", ";
                     } else {
                         move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)];
