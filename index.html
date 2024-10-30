@@ -49,25 +49,16 @@
         
         function generateScramble() {
             document.getElementById("scramble").innerText = ''
+            var move = []
             for(let i = 0; i < moves; i++){
-                var move = ''
                 if(Math.random() > 0.5){
-                    if(i != 1){
-                        move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)] + ", ";   
-                    } else {
-                        move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)];
-                    }
+                    move.push(cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)]); 
                 } else {
                     var axiy = generateWheelAxis();
-                    
-                    if(i != 1){
-                        move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)] + ", ";
-                    } else {
-                        move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)];
-                    }
+                    move.push("~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)]);
                 }
-                document.getElementById("scramble").innerText += move;
             }
+            document.getElementById("scramble").innerText = move.join(", ");
         }
     </script>
 </body>
