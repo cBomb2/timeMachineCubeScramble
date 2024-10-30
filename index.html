@@ -34,14 +34,14 @@
         const moves = 20;
 
         function generateAxis(){
-            var axi = avaliable[Math.round(Math.random() * avaliable.length)];
+            var axi = avaliable[Math.floor(Math.random() * avaliable.length)];
             avaliable = [0, 1, 2];
             avaliable.splice(axi, 1);
             return axi;
         }
 
         function generateWheelAxis(){
-            var axi = wheelAvaliable[Math.round(Math.random() * wheelAvaliable.length)];
+            var axi = wheelAvaliable[Math.floor(Math.random() * wheelAvaliable.length)];
             wheelAvaliable = [0, 1, 2];
             wheelAvaliable.splice(axi, 1);
             return axi;
@@ -51,9 +51,10 @@
             for(let i = 0; i < moves; i++){
                 var move = ''
                 if(Math.random() > 0.5){
-                    move = generateAxis() + moveModifiers[Math.round(Math.random() * moveModifiers.length)];
+                    move = cubeMoves[generateAxis()][Math.round(Math.random())] + moveModifiers[Math.floor(Math.random() * moveModifiers.length)];
                 } else {
-                    move = "~" + generateWheelAxis() + wheelModifiers[Math.round(Math.random() * wheelModifiers.length)];
+                    var axiy = generateWheelAxis();
+                    move = "~" + cubeMoves[Math.floor(axiy/2)][axiy%2] + wheelModifiers[Math.floor(Math.random() * wheelModifiers.length)];
                 }
                 move += ", "
                 document.getElementById("scramble").innerText += move;
