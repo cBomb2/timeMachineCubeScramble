@@ -33,14 +33,14 @@
         const moves = 20;
 
         function generateAxis(){
-            var axi = avaliable[Math.round(Math.random() * avaliable.length())];
+            var axi = avaliable[Math.round(Math.random() * avaliable.length)];
             avaliable = [0, 1, 2];
             avaliable.splice(axi, 1);
             return axi;
         }
 
         function generateWheelAxis(){
-            var axi = wheelAvaliable[Math.round(Math.random() * wheelAvaliable.length())];
+            var axi = wheelAvaliable[Math.round(Math.random() * wheelAvaliable.length)];
             wheelAvaliable = [0, 1, 2];
             wheelAvaliable.splice(axi, 1);
             return axi;
